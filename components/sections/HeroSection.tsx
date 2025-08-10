@@ -1,10 +1,10 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
-import { STATISTICS, ASSETS } from "@/lib/constants"
+import { STATISTICS } from "@/lib/constants"
 
 // TypeScript 5.9: Enhanced type safety with readonly arrays and const assertions
 interface HeroSlide {
@@ -83,16 +83,8 @@ const HERO_SLIDES: readonly HeroSlide[] = [
   }
 ]
 
-// TypeScript 5.9: Enhanced state typing with strict null checks
-type VideoState = Record<number, boolean>;
-
-// TypeScript 5.9: State interface removed as it's not needed
-
 export default function HeroSection(): JSX.Element {
   const [currentSlide, setCurrentSlide] = useState<number>(0)
-  const [isVideoLoaded, setIsVideoLoaded] = useState<VideoState>({})
-  const [hasVideoError, setHasVideoError] = useState<VideoState>({})
-  const videoRefs = useRef<(HTMLVideoElement | null)[]>([])
 
   // TypeScript 5.9: Enhanced effect typing with proper cleanup
   useEffect((): (() => void) => {
@@ -106,11 +98,11 @@ export default function HeroSection(): JSX.Element {
   useEffect((): void => {
     // Preload next image for smoother transitions
     const nextSlide = (currentSlide + 1) % HERO_SLIDES.length
-    const nextImage = new Image()
+    const nextImage = new window.Image()
     nextImage.src = HERO_SLIDES[nextSlide]?.fallbackImage.pc ?? ''
     
     // Preload mobile version too
-    const nextMobileImage = new Image()
+    const nextMobileImage = new window.Image()
     nextMobileImage.src = HERO_SLIDES[nextSlide]?.fallbackImage.mobile ?? ''
   }, [currentSlide])
 
@@ -191,7 +183,7 @@ export default function HeroSection(): JSX.Element {
                         {HERO_SLIDES[currentSlide]?.title.split('\n').map((line, index) => (
                           <span key={index}>
                             {line}
-                            {index < HERO_SLIDES[currentSlide].title.split('\n').length - 1 && <br />}
+                            {index < (HERO_SLIDES[currentSlide]?.title.split('\n').length ?? 0) - 1 && <br />}
                           </span>
                         ))}
                       </motion.span>

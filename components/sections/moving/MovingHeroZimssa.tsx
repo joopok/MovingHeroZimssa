@@ -20,7 +20,7 @@ export default function MovingHeroZimssa() {
           await video.play()
           setIsVideoLoaded(true)
         } catch (error) {
-          console.log('Video autoplay failed:', error)
+          // Video autoplay failed
           setHasVideoError(true)
           setIsVideoLoaded(false)
         }
@@ -30,6 +30,7 @@ export default function MovingHeroZimssa() {
       const timer = setTimeout(playVideo, 100)
       return () => clearTimeout(timer)
     }
+    return undefined
   }, [hasVideoError])
 
   return (

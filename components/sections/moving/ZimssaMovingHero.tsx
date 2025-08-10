@@ -8,18 +8,18 @@ import { ChevronDown } from "lucide-react"
 export default function ZimssaMovingHero() {
   const [isVideoLoaded, setIsVideoLoaded] = useState(false)
   const [hasVideoError, setHasVideoError] = useState(false)
-  const [isMobile, setIsMobile] = useState(false)
+  // const [isMobile, setIsMobile] = useState(false) // Unused variable removed
   const videoRef = useRef<HTMLVideoElement>(null)
 
-  // Check if mobile
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768)
-    }
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
-    return () => window.removeEventListener('resize', checkMobile)
-  }, [])
+  // Check if mobile - Removed as isMobile is not used
+  // useEffect(() => {
+  //   const checkMobile = () => {
+  //     setIsMobile(window.innerWidth <= 768)
+  //   }
+  //   checkMobile()
+  //   window.addEventListener('resize', checkMobile)
+  //   return () => window.removeEventListener('resize', checkMobile)
+  // }, [])
 
   // Video management with better error handling
   useEffect(() => {
@@ -34,7 +34,7 @@ export default function ZimssaMovingHero() {
           await video.play()
           setIsVideoLoaded(true)
         } catch (error) {
-          console.log('Video autoplay failed, user interaction may be required')
+          // Video autoplay failed, user interaction may be required
           setHasVideoError(true)
           setIsVideoLoaded(false)
         }
@@ -44,6 +44,7 @@ export default function ZimssaMovingHero() {
       const timer = setTimeout(playVideo, 100)
       return () => clearTimeout(timer)
     }
+    return undefined
   }, [hasVideoError])
 
   return (
@@ -60,16 +61,16 @@ export default function ZimssaMovingHero() {
           preload="auto"
           poster="/assets/images/hero/moving-pc.jpg"
           onLoadedData={() => {
-            console.log('Video loaded')
+            // Video loaded successfully
             setIsVideoLoaded(true)
           }}
-          onError={(e) => {
-            console.error('Video error:', e)
+          onError={() => {
+            // Video error occurred
             setHasVideoError(true)
             setIsVideoLoaded(false)
           }}
           onCanPlay={() => {
-            console.log('Video can play')
+            // Video can play
             setIsVideoLoaded(true)
           }}
         >

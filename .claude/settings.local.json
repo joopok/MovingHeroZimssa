@@ -25,7 +25,9 @@
       "Bash(npm ls:*)",
       "Bash(npx tsc:*)",
       "Bash(pkill:*)",
-      "Bash(git init:*)"
+      "Bash(git init:*)",
+      "Bash(git branch:*)",
+      "Bash(git push:*)"
     ],
     "deny": []
   }
