@@ -13,6 +13,21 @@ const handle = app.getRequestHandler()
 app.prepare().then(() => {
   createServer(async (req, res) => {
     try {
+      // 디버그 로깅 추가
+      console.log(`[${new Date().toISOString()}] ${req.method} ${req.url} - Headers:`, req.headers)
+      
+      // CORS 헤더 추가
+      res.setHeader('Access-Control-Allow-Origin', '*')
+      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+      
+      // OPTIONS 요청 처리
+      if (req.method === 'OPTIONS') {
+        res.statusCode = 200
+        res.end()
+        return
+      }
+      
       const parsedUrl = parse(req.url, true)
       await handle(req, res, parsedUrl)
     } catch (err) {

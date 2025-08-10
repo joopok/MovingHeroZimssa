@@ -68,6 +68,7 @@ const nextConfig = {
         'localhost:3000',
         'localhost:7008',
         '192.168.0.109:7008',
+        '192.168.0.109',
         '*.vercel.app'
       ],
     },
