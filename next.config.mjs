@@ -64,7 +64,12 @@ const nextConfig = {
     ],
     // Server actions improvements
     serverActions: {
-      allowedOrigins: ['localhost:3000', '*.vercel.app'],
+      allowedOrigins: [
+        'localhost:3000',
+        'localhost:7008',
+        '192.168.0.109:7008',
+        '*.vercel.app'
+      ],
     },
   },
 
@@ -87,7 +92,7 @@ const nextConfig = {
     },
   }),
 
-  // Security headers
+  // Security headers (relaxed for NAS deployment)
   async headers() {
     return [
       {
@@ -95,7 +100,7 @@ const nextConfig = {
         headers: [
           {
             key: 'X-Frame-Options',
-            value: 'DENY',
+            value: 'SAMEORIGIN', // Changed from DENY to allow NAS iframe
           },
           {
             key: 'X-Content-Type-Options',
@@ -104,6 +109,14 @@ const nextConfig = {
           {
             key: 'Referrer-Policy',
             value: 'strict-origin-when-cross-origin',
+          },
+          {
+            key: 'Access-Control-Allow-Origin',
+            value: '*', // Allow all origins for NAS
+          },
+          {
+            key: 'Access-Control-Allow-Methods',
+            value: 'GET, POST, PUT, DELETE, OPTIONS',
           },
         ],
       },
