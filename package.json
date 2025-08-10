@@ -6,7 +6,10 @@
     "dev": "next dev --turbo",
     "dev:legacy": "next dev",
     "build": "next build",
+    "build:nas": "next build",
     "start": "next start",
+    "start:nas": "PORT=7008 next start",
+    "start:custom": "NODE_ENV=production node server.js",
     "lint": "next lint",
     "analyze": "ANALYZE=true next build"
   },
