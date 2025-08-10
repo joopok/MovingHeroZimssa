@@ -27,7 +27,8 @@
       "Bash(pkill:*)",
       "Bash(git init:*)",
       "Bash(git branch:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(PORT=7008 npm run dev)"
     ],
     "deny": []
   }
