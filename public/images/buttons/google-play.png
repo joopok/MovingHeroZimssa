@@ -1,0 +1,5 @@
+<svg width="160" height="48" viewBox="0 0 160 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="160" height="48" rx="4" fill="#414141"/>
+<text x="80" y="27" font-family="Arial" font-size="14" fill="#fff" text-anchor="middle">Google Play</text>
+</svg>
+EOF < /dev/null

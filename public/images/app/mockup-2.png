@@ -1,0 +1,6 @@
+<svg width="240" height="480" viewBox="0 0 240 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="240" height="480" rx="20" fill="#f3f4f6"/>
+<rect x="20" y="40" width="200" height="400" rx="10" fill="#fff"/>
+<text x="120" y="250" font-family="Arial" font-size="16" fill="#6b7280" text-anchor="middle">앱 목업 2</text>
+</svg>
+EOF < /dev/null
