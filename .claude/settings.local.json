@@ -36,7 +36,12 @@
       "WebFetch(domain:www.jenkins.io)",
       "WebFetch(domain:plugins.jenkins.io)",
       "Bash(mcp list-servers:*)",
-      "mcp__ide__executeCode"
+      "mcp__ide__executeCode",
+      "Bash(./check-nas-css.sh:*)",
+      "Bash(./deploy-nas-jenkins.sh:*)",
+      "Bash(ssh:*)",
+      "Bash(rsync:*)",
+      "Bash(tar:*)"
     ],
     "deny": []
   }

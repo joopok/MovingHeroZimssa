@@ -34,3 +34,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# temporary files
+*.tar.gz
+deploy-temp/
+test-server.log
+server.log
+server.pid
