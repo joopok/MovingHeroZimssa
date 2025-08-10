@@ -35,7 +35,8 @@
       "Bash(chmod:*)",
       "WebFetch(domain:www.jenkins.io)",
       "WebFetch(domain:plugins.jenkins.io)",
-      "Bash(mcp list-servers:*)"
+      "Bash(mcp list-servers:*)",
+      "mcp__ide__executeCode"
     ],
     "deny": []
   }
