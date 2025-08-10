@@ -1,0 +1,100 @@
+#!/bin/bash
+# Jenkins Execute Shell 스크립트 (403 오류 수정 버전)
+# 이 내용을 Jenkins에 복사해서 사용하세요
+
+set -euo pipefail
+
+PORT=7008
+echo "=== dabang-movers-app 자동 배포 시작 (PORT: ${PORT}) ==="
+
+# 작업 디렉토리 확인
+echo "현재 디렉토리: $(pwd)"
+echo "파일 목록:"
+ls -la
+
+# 1) 의존성 설치
+echo "1. 의존성 설치 중..."
+npm ci --prefer-offline --no-audit --progress=false || npm install
+
+# 2) Next.js 빌드
+echo "2. Next.js 빌드 중..."
+npm run build
+
+# 빌드 결과 확인
+if [ -d ".next" ]; then
+  echo "✅ .next 디렉토리 생성 확인"
+else
+  echo "❌ .next 디렉토리가 없습니다. 빌드 실패!"
+  exit 1
+fi
+
+# 3) 이전 서버 종료
+echo "3. 기존 서버 종료 중..."
+if [ -f server.pid ]; then
+  OLD_PID="$(cat server.pid || true)"
+  if [ -n "${OLD_PID:-}" ] && ps -p "$OLD_PID" >/dev/null 2>&1; then
+    echo "기존 서버 종료 (PID: $OLD_PID)"
+    kill -9 "$OLD_PID" || true
+    sleep 2
+  fi
+fi
+# 모든 Node.js/Next.js 프로세스 종료
+pkill -f "node.*server.js" || true
+pkill -f "next start" || true
+pkill -f "node.*next" || true
+sleep 2
+
+# 4) Custom Server로 실행 (server.js 사용)
+echo "4. Next.js Custom Server 시작..."
+PORT=${PORT} NODE_ENV=production nohup node server.js > server.log 2>&1 &
+PID=$!
+echo $PID > server.pid
+echo "서버 PID: $PID"
+
+# 5) 서버 시작 대기
+echo "5. 서버 시작 대기 중..."
+sleep 5
+
+# 6) 헬스체크
+echo "6. 서버 상태 확인..."
+SUCCESS=false
+for i in $(seq 1 30); do
+  # 내부 접속 테스트
+  if curl -fsS "http://localhost:${PORT}" >/dev/null 2>&1; then
+    echo "✅ localhost:${PORT} 접속 성공"
+    SUCCESS=true
+    break
+  fi
+  echo "대기중... ($i/30)"
+  sleep 2
+done
+
+if [ "$SUCCESS" = false ]; then
+  echo "❌ 서버 시작 실패"
+  echo "=== 서버 로그 ==="
+  cat server.log || true
+  echo "=== 프로세스 확인 ==="
+  ps aux | grep -E "node|next" | grep -v grep || true
+  exit 1
+fi
+
+# 7) 최종 확인
+echo ""
+echo "========================================="
+echo "✅ 배포 완료!"
+echo "========================================="
+echo "📌 내부 접속: http://localhost:${PORT}"
+echo "📌 외부 접속: http://192.168.0.109:${PORT}"
+echo "========================================="
+echo ""
+
+# 서버 로그 출력 (마지막 20줄)
+echo "=== 서버 로그 (최근 20줄) ==="
+tail -n 20 server.log || true
+
+# 프로세스 확인
+echo ""
+echo "=== 실행 중인 프로세스 ==="
+ps aux | grep -E "node.*server.js" | grep -v grep || true
+
+exit 0

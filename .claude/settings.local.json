@@ -28,7 +28,8 @@
       "Bash(git init:*)",
       "Bash(git branch:*)",
       "Bash(git push:*)",
-      "Bash(PORT=7008 npm run dev)"
+      "Bash(PORT=7008 npm run dev)",
+      "Bash(git push:*)"
     ],
     "deny": []
   }
