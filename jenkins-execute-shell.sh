@@ -51,8 +51,11 @@ sleep 2
 echo ""
 echo "🚀 [4/5] Next.js 서버 시작 중..."
 
-# Custom server 파일이 있으면 사용, 없으면 일반 start
-if [ -f "server.js" ]; then
+# Simplified server 우선 사용
+if [ -f "server-simple.js" ]; then
+  echo "   Simplified server (server-simple.js) 사용"
+  PORT=${PORT} NODE_ENV=production nohup node server-simple.js > server.log 2>&1 &
+elif [ -f "server.js" ]; then
   echo "   Custom server (server.js) 사용"
   PORT=${PORT} NODE_ENV=production nohup node server.js > server.log 2>&1 &
 else

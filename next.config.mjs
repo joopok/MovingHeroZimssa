@@ -53,7 +53,7 @@ const nextConfig = {
     },
   },
 
-  // Next.js 15 Experimental Features
+  // Disable all experimental features for production stability
   experimental: {
     // Package import optimization
     optimizePackageImports: [
@@ -62,16 +62,6 @@ const nextConfig = {
       '@radix-ui/react-dialog',
       '@radix-ui/react-dropdown-menu'
     ],
-    // Server actions improvements
-    serverActions: {
-      allowedOrigins: [
-        'localhost:3000',
-        'localhost:7008',
-        '192.168.0.109:7008',
-        '192.168.0.109',
-        '*.vercel.app'
-      ],
-    },
   },
 
   // Compiler optimizations
@@ -93,31 +83,23 @@ const nextConfig = {
     },
   }),
 
-  // Security headers (relaxed for NAS deployment)
+  // Minimal headers for NAS deployment
   async headers() {
     return [
       {
         source: '/(.*)',
         headers: [
           {
-            key: 'X-Frame-Options',
-            value: 'SAMEORIGIN', // Changed from DENY to allow NAS iframe
-          },
-          {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff',
-          },
-          {
-            key: 'Referrer-Policy',
-            value: 'strict-origin-when-cross-origin',
-          },
-          {
             key: 'Access-Control-Allow-Origin',
-            value: '*', // Allow all origins for NAS
+            value: '*',
           },
           {
             key: 'Access-Control-Allow-Methods',
             value: 'GET, POST, PUT, DELETE, OPTIONS',
+          },
+          {
+            key: 'Access-Control-Allow-Headers',
+            value: '*',
           },
         ],
       },
