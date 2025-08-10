@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 // This middleware runs on every request
-export function middleware(request: NextRequest) {
+export function middleware(_request: NextRequest) {
   // Allow all requests - disable any access restrictions
   const response = NextResponse.next()
   
