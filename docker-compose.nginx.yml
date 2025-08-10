@@ -1,0 +1,60 @@
+# Docker Compose for Nginx Reverse Proxy on Synology NAS
+# This will create a separate Nginx container to proxy to your Jenkins container
+
+version: '3.8'
+
+services:
+  nginx-proxy:
+    image: nginx:alpine
+    container_name: dabang-movers-nginx
+    ports:
+      - "80:80"
+      - "443:443"  # Optional HTTPS
+    volumes:
+      # Mount the nginx configuration
+      - ./nginx-proxy.conf:/etc/nginx/nginx.conf:ro
+      - ./logs/nginx:/var/log/nginx
+      # Optional: SSL certificates
+      # - ./ssl:/etc/nginx/ssl:ro
+    networks:
+      - dabang-network
+    depends_on:
+      - app
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "nginx", "-t"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    environment:
+      - TZ=Asia/Seoul
+
+  # Optional: If you want to run the app in a separate container
+  # Remove this if using existing Jenkins setup
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.app
+    container_name: dabang-movers-app
+    ports:
+      - "7008:7008"  # Internal port, not exposed externally
+    networks:
+      - dabang-network
+    environment:
+      - NODE_ENV=production
+      - PORT=7008
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7008/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+networks:
+  dabang-network:
+    driver: bridge
+
+volumes:
+  nginx-logs:
+    driver: local

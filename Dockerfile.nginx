@@ -1,0 +1,39 @@
+# Standalone Nginx Reverse Proxy Container
+# Use this if you want a simple, lightweight proxy container
+
+FROM nginx:alpine
+
+# Install additional tools for debugging
+RUN apk add --no-cache \
+    curl \
+    wget \
+    tcpdump \
+    netstat-nat
+
+# Copy custom nginx configuration
+COPY nginx-proxy.conf /etc/nginx/nginx.conf
+
+# Create cache directory
+RUN mkdir -p /var/cache/nginx/proxy_cache && \
+    chown -R nginx:nginx /var/cache/nginx/proxy_cache
+
+# Create logs directory
+RUN mkdir -p /var/log/nginx && \
+    chown -R nginx:nginx /var/log/nginx
+
+# Copy custom error pages (optional)
+# COPY error-pages/ /usr/share/nginx/html/
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+    CMD curl -f http://localhost/nginx-health || exit 1
+
+# Expose ports
+EXPOSE 80 443
+
+# Use custom entrypoint for better logging
+COPY nginx-entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["nginx", "-g", "daemon off;"]
