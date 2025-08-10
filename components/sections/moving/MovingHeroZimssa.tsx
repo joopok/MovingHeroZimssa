@@ -19,7 +19,7 @@ export default function MovingHeroZimssa() {
         try {
           await video.play()
           setIsVideoLoaded(true)
-        } catch (error) {
+        } catch {
           // Video autoplay failed
           setHasVideoError(true)
           setIsVideoLoaded(false)

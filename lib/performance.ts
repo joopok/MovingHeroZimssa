@@ -6,6 +6,10 @@
 // 사용자 선호도나 기기 성능에 따른 애니메이션 레벨
 export type AnimationLevel = 'none' | 'minimal' | 'reduced' | 'full'
 
+interface NavigatorExtended extends Navigator {
+  deviceMemory?: number
+}
+
 interface PerformanceConfig {
   reduceMotion: boolean
   animationLevel: AnimationLevel
@@ -88,19 +92,19 @@ export const shouldEnableComplexAnimation = (): boolean => {
 }
 
 // Framer Motion 전환 설정 최적화
-export const getOptimizedTransition = (transition: any) => {
+export const getOptimizedTransition = (transition: Record<string, unknown>) => {
   const optimized = { ...transition }
   
-  if (optimized.duration) {
-    optimized.duration = getAnimationDuration(optimized.duration)
+  if (optimized['duration']) {
+    optimized['duration'] = getAnimationDuration(optimized['duration'] as number)
   }
   
-  if (optimized.repeat === Infinity && !performanceConfig.enableInfiniteAnimations) {
-    optimized.repeat = 0
+  if (optimized['repeat'] === Infinity && !performanceConfig.enableInfiniteAnimations) {
+    optimized['repeat'] = 0
   }
   
   // 성능을 위한 기본 설정 추가
-  optimized.ease = optimized.ease || 'easeOut'
+  optimized['ease'] = optimized['ease'] || 'easeOut'
   
   return optimized
 }
@@ -110,7 +114,7 @@ export const isHighPerformanceDevice = (): boolean => {
   if (typeof window === 'undefined') return false
   
   const cores = navigator.hardwareConcurrency || 0
-  const memory = (navigator as any).deviceMemory || 0
+  const memory = (navigator as NavigatorExtended).deviceMemory || 0
   
   return cores >= 8 && memory >= 8 // 8코어 이상, 8GB 이상 RAM
 }

@@ -8,6 +8,14 @@
 import { useEffect, useState } from 'react'
 import { usePerformanceBasedMotion } from '@/hooks/useReducedMotion'
 
+interface PerformanceExtended extends Performance {
+  memory?: {
+    usedJSHeapSize: number
+    totalJSHeapSize: number
+    jsHeapSizeLimit: number
+  }
+}
+
 interface PerformanceMetrics {
   lcp?: number // Largest Contentful Paint
   fid?: number // First Input Delay (now INP in Core Web Vitals)
@@ -91,8 +99,8 @@ export default function PerformanceMonitor({
     // React 19 호환 메모리 사용량 모니터링
     const monitorMemory = () => {
       if ('memory' in performance) {
-        const memoryInfo = (performance as any).memory
-        if (debug) {
+        const memoryInfo = (performance as PerformanceExtended).memory
+        if (debug && memoryInfo) {
           console.log('Memory Usage:', {
             used: `${Math.round(memoryInfo.usedJSHeapSize / 1024 / 1024)}MB`,
             total: `${Math.round(memoryInfo.totalJSHeapSize / 1024 / 1024)}MB`,

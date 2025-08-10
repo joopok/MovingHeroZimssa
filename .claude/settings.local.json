@@ -32,7 +32,10 @@
       "Bash(git push:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(chmod:*)"
+      "Bash(chmod:*)",
+      "WebFetch(domain:www.jenkins.io)",
+      "WebFetch(domain:plugins.jenkins.io)",
+      "Bash(mcp list-servers:*)"
     ],
     "deny": []
   }

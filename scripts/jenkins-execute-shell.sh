@@ -4,7 +4,7 @@
 
 set -euo pipefail
 
-PORT=7008
+PORT=7009
 echo "========================================="
 echo "📦 dabang-movers-app 자동 배포 시작"
 echo "🔧 포트: ${PORT}"
