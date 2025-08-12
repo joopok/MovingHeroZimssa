@@ -41,7 +41,9 @@
       "Bash(./deploy-nas-jenkins.sh:*)",
       "Bash(ssh:*)",
       "Bash(rsync:*)",
-      "Bash(tar:*)"
+      "Bash(tar:*)",
+      "Bash(open http://localhost:7008)",
+      "Bash(./deploy-final-7015.sh:*)"
     ],
     "deny": []
   }

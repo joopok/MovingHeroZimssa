@@ -2,14 +2,6 @@
 
 import { useSearchParams } from 'next/navigation'
 import { Suspense } from 'react'
-import TransportationHero from '@/components/sections/transportation/TransportationHero'
-import ServiceProcess from '@/components/sections/transportation/ServiceProcess'
-import ZimssaSystem from '@/components/sections/transportation/ZimssaSystem'
-import TransportationReviews from '@/components/sections/transportation/TransportationReviews'
-import PartnerStories from '@/components/sections/transportation/PartnerStories'
-import AdditionalServices from '@/components/sections/transportation/AdditionalServices'
-import PartnerRecruit from '@/components/sections/transportation/PartnerRecruit'
-import FinalCta from '@/components/sections/transportation/FinalCta'
 
 function ServiceContent() {
   const searchParams = useSearchParams()
@@ -18,16 +10,12 @@ function ServiceContent() {
   // Handle transportation service type
   if (type === 'delivery') {
     return (
-      <>
-        <TransportationHero />
-        <ServiceProcess />
-        <ZimssaSystem />
-        <TransportationReviews />
-        <PartnerStories />
-        <AdditionalServices />
-        <PartnerRecruit />
-        <FinalCta />
-      </>
+      <div className="min-h-screen pt-[100px]">
+        <div className="container mx-auto px-4 py-12">
+          <h1 className="text-4xl font-bold mb-8">운송 서비스</h1>
+          <p className="text-lg text-gray-600">빠르고 안전한 운송 서비스를 제공합니다.</p>
+        </div>
+      </div>
     )
   }
 

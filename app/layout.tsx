@@ -8,9 +8,7 @@ import Footer from "@/components/layout/Footer"
 const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-inter',
-  preload: true,
-  adjustFontFallback: true,
+  variable: '--font-inter'
 })
 
 // Pretendard 폰트 (한국어)

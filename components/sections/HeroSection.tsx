@@ -121,30 +121,26 @@ export default function HeroSection(): JSX.Element {
           >
             {/* Zimssa-style Image Background with Next.js Image */}
             <div className="absolute inset-0 w-full h-full overflow-hidden">
-              {/* Desktop Image */}
-              <div className="hidden md:block absolute inset-0">
-                <Image
-                  src={HERO_SLIDES[currentSlide]?.fallbackImage.pc ?? ''}
-                  alt={HERO_SLIDES[currentSlide]?.title.replace(/\n/g, ' ') ?? ''}
-                  fill
-                  priority={currentSlide === 0}
-                  quality={90}
-                  sizes="100vw"
-                  className="object-cover object-center"
-                />
-              </div>
-              {/* Mobile Image */}
-              <div className="block md:hidden absolute inset-0">
-                <Image
-                  src={HERO_SLIDES[currentSlide]?.fallbackImage.mobile ?? ''}
-                  alt={HERO_SLIDES[currentSlide]?.title.replace(/\n/g, ' ') ?? ''}
-                  fill
-                  priority={currentSlide === 0}
-                  quality={90}
-                  sizes="100vw"
-                  className="object-cover object-center"
-                />
-              </div>
+              {/* Desktop Image - use CSS for visibility instead of conditional rendering */}
+              <Image
+                src={HERO_SLIDES[currentSlide]?.fallbackImage.pc ?? ''}
+                alt={HERO_SLIDES[currentSlide]?.title.replace(/\n/g, ' ') ?? ''}
+                fill
+                priority={currentSlide === 0}
+                quality={90}
+                sizes="(min-width: 768px) 100vw, 0vw"
+                className="object-cover object-center hidden md:block"
+              />
+              {/* Mobile Image - use CSS for visibility instead of conditional rendering */}
+              <Image
+                src={HERO_SLIDES[currentSlide]?.fallbackImage.mobile ?? ''}
+                alt={HERO_SLIDES[currentSlide]?.title.replace(/\n/g, ' ') ?? ''}
+                fill
+                priority={currentSlide === 0}
+                quality={90}
+                sizes="(max-width: 767px) 100vw, 0vw"
+                className="object-cover object-center md:hidden"
+              />
             </div>
 
             {/* Subtle overlay for better text contrast */}
