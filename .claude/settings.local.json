@@ -49,7 +49,11 @@
       "Bash(git check-ignore:*)",
       "Bash(./restart-7015.sh:*)",
       "Bash(./fix-delivery-build.sh:*)",
-      "Bash(./simple-deploy.sh)"
+      "Bash(./simple-deploy.sh)",
+      "Bash(git ls-tree:*)",
+      "Bash(./restart-fresh.sh:*)",
+      "Bash(./final-deploy.sh)",
+      "Bash(./deploy-7015-final.sh)"
     ],
     "deny": []
   }
