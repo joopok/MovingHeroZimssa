@@ -43,7 +43,9 @@
       "Bash(rsync:*)",
       "Bash(tar:*)",
       "Bash(open http://localhost:7008)",
-      "Bash(./deploy-final-7015.sh:*)"
+      "Bash(./deploy-final-7015.sh:*)",
+      "Bash(./final-deploy-7015.sh)",
+      "Bash(PORT=7015 npm run dev)"
     ],
     "deny": []
   }
