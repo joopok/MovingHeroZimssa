@@ -45,7 +45,11 @@
       "Bash(open http://localhost:7008)",
       "Bash(./deploy-final-7015.sh:*)",
       "Bash(./final-deploy-7015.sh)",
-      "Bash(PORT=7015 npm run dev)"
+      "Bash(PORT=7015 npm run dev)",
+      "Bash(git check-ignore:*)",
+      "Bash(./restart-7015.sh:*)",
+      "Bash(./fix-delivery-build.sh:*)",
+      "Bash(./simple-deploy.sh)"
     ],
     "deny": []
   }
